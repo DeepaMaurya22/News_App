@@ -1,57 +1,3 @@
-// import { useState, useEffect } from "react";
-// import Card from "../components/Card";
-
-// const News = () => {
-//   const [articles, setArticles] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   // top news
-//   useEffect(() => {
-//     const fetchNews = async () => {
-//       try {
-//         const response = await fetch(
-//           "https://newsapi.org/v2/top-headlines?" +
-//             "country=us&" +
-//             "apiKey=df9187bf5dce4b9c82d251ac620ce7bc"
-//         );
-//         if (!response.ok) {
-//           throw new Error("Network response was not ok");
-//         }
-//         const data = await response.json();
-//         setArticles(data.articles);
-//       } catch (error) {
-//         setError(error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchNews();
-//   }, []);
-
-//   if (loading) {
-//     return <p>Loading...</p>;
-//   }
-
-//   if (error) {
-//     return <p>Error loading news: {error.message}</p>;
-//   }
-
-//   return (
-//     <div className="container mx-auto p-4">
-//       <h1 className="text-2xl font-bold mb-4">Top Headlines</h1>
-//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-//         {articles.map((article, index) => (
-//           <Card article={article} key={index} />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default News;
-
 import { useState, useEffect } from "react";
 import Card from "../components/Card";
 
@@ -65,10 +11,9 @@ const News = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
+        const apiKey = import.meta.env.VITE_API_KEY;
         const response = await fetch(
-          "https://newsapi.org/v2/top-headlines?" +
-            "country=us&" +
-            "apiKey=df9187bf5dce4b9c82d251ac620ce7bc"
+          `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -116,7 +61,11 @@ const News = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <p className="min-h-screen flex items-center justify-center">
+        Loading...
+      </p>
+    );
   }
 
   if (error) {
